@@ -1,0 +1,72 @@
+@use "variabili";
+@use "pixelToRem";
+
+body {
+  font-size: 1rem;
+}
+
+@mixin col-bor-font($color, $color-border, $font) {
+  color: $color;
+  border: pixelToRem.convertToRem(1) solid $color-border;
+  font-size: $font;
+}
+
+%extension {
+  line-height: 1.6;
+  color: variabili.$color-ternary;
+  border-bottom: pixelToRem.convertToRem(2) solid variabili.$color-secondary;
+}
+
+div {
+  padding: variabili.$padding-unit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: pixelToRem.convertToRem(1) solid variabili.$color-primary;
+  h1 {
+    @extend %extension;
+  }
+
+  h2 {
+    @extend %extension;
+    padding: 1rem;
+    border: pixelToRem.convertToRem(1) solid variabili.$color-primary;
+  }
+  section {
+    display: flex;
+    width: 100%;
+    p {
+      padding: 2 * variabili.$padding-unit variabili.$padding-unit;
+      text-align: center;
+    }
+    &:last-child {
+      article {
+        @include col-bor-font(
+          variabili.$color-ternary,
+          variabili.$color-secondary,
+          pixelToRem.convertToRem(24)
+        );
+        margin-top: variabili.$padding-unit;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  article {
+    &:nth-child(odd) {
+      @include col-bor-font(
+        variabili.$color-secondary,
+        variabili.$color-ternary,
+        1rem
+      );
+    }
+    &:nth-child(even) {
+      @include col-bor-font(
+        variabili.$color-primary,
+        variabili.$color-ternary,
+        1rem
+      );
+    }
+  }
+}
